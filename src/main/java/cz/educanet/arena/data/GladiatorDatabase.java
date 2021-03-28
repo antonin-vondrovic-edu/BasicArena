@@ -2,28 +2,43 @@ package cz.educanet.arena.data;
 
 import cz.educanet.arena.logic.Gladiator;
 
-/**
- * Utils class that saves and loads gladiators.
- */
+import java.io.*;
+
 public class GladiatorDatabase {
 
-    /**
-     * @param filename path to the gladiator file.
-     * @return loaded Gladiator
-     */
     public static Gladiator loadGladiator(String filename) {
-        // TODO:
-        throw new UnsupportedOperationException();
+        Gladiator load = new Gladiator();
+        try {
+            BufferedReader br = new BufferedReader(new FileReader("fighters/" + filename));
+
+            load.setName(br.readLine());
+            load.setMaxHP(Integer.parseInt(br.readLine()));
+            load.setMaxDamage(Integer.parseInt(br.readLine()));
+            load.setMinDamage(Integer.parseInt(br.readLine()));
+
+            br.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return load;
     }
 
-    /**
-     * Saves the gladiator.
-     * @param filename path to save too.
-     * @param gladiator Gladiator to save.
-     */
     public static void saveGladiator(String filename, Gladiator gladiator) {
-        // TODO:
-        throw new UnsupportedOperationException();
+        try {
+            BufferedWriter bw = new BufferedWriter(new FileWriter("fighters/" + filename));
+
+            bw.write(gladiator.getName()+"");
+            bw.newLine();
+            bw.write(gladiator.getMaxHP()+"");
+            bw.newLine();
+            bw.write(gladiator.getMaxDamage()+"");
+            bw.newLine();
+            bw.write(gladiator.getMinDamage()+"");
+
+            bw.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 }

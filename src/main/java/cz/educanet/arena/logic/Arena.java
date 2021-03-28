@@ -1,33 +1,38 @@
 package cz.educanet.arena.logic;
 
-/**
- * Represents the arena.
- */
+import java.util.concurrent.TimeUnit;
+
 public class Arena {
 
     private Gladiator gladiator1;
     private Gladiator gladiator2;
-    /**
-     * Represents the current round. This property is incremented each round.
-     */
+
     private int round;
 
-    /**
-     * Makes the gladiators fight one round.
-     */
     public void fight() {
-        // TODO:
-        // Gladiator 1 should deal (random) damage to Gladiator 2
-        // Gladiator 2 should deal (random) damage to Gladiator 1
-        throw new UnsupportedOperationException();
+        System.out.println("##### < ROUND " + (round+1)  + " > #####");
+        System.out.println();
+        System.out.println(">> " + gladiator1.getName() + "'s HP: "+gladiator1.getHP());
+        System.out.println(">> " + gladiator2.getName() + "'s HP: "+gladiator2.getHP());
+        System.out.println();
+        gladiator1.dealDamage(gladiator2);
+        System.out.println("> " + gladiator1.getName() + " deals " + gladiator1.getDamage() + " damage to " + gladiator2.getName());
+        gladiator2.dealDamage(gladiator1);
+        System.out.println("> " + gladiator2.getName() + " deals " + gladiator2.getDamage() + " damage to " + gladiator1.getName());
+        System.out.println();
+        try {
+            TimeUnit.SECONDS.sleep(2);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        round++;
     }
 
-    /**
-     * @return the winner, null if none.
-     */
     public Gladiator getWinner() {
-        // TODO:
-        throw new UnsupportedOperationException();
+        if (gladiator1.isDead()) return gladiator2;
+        if (gladiator2.isDead()) return gladiator1;
+
+        return null;
     }
 
     public void setGladiator1(Gladiator gladiator1) {
